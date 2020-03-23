@@ -9,15 +9,11 @@ float vertices[] = {
 	 0.5f, -0.5f, 0.0f,			   //1
 	 0.0f,  0.5f, 0.0f,			   //2
 	 //第二个三角形				 
-	 //0.5f, -0.5f, 0.0f,		 
-	 //0.0f,  0.5f, 0.0f,		 
-	 0.8f,  0.8f, 0.0f			   //3
+	 0.5f, -0.5f, 0.0f,		 
+	 0.0f,  0.5f, 0.0f,		 
+	 0.8f,  0.8f, 0.0f			   
 };
-//EBO绘制两个共边的三角形只需要四个点
-unsigned int indices[] = {
-	0,1,3,
-	1,2,3
-};
+
 
 const char* vertexShaderSource = 
 "#version 330 core \n"
@@ -76,10 +72,6 @@ int main() {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	unsigned int EBO;
-	glGenBuffers(1, &EBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	unsigned int vertexShader;
 	vertexShader  = glCreateShader(GL_VERTEX_SHADER);
@@ -108,14 +100,9 @@ int main() {
 		glClearColor(1.0, 0, 0, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT);
 		//VBO绘制方式
-		/*glBindVertexArray(VAO);
-		glUseProgram(shaderProgram);
-		glDrawArrays(GL_TRIANGLES, 0, 6);*/
-
-		//EBO绘制方式，数据在VBO中
 		glBindVertexArray(VAO);
 		glUseProgram(shaderProgram);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		glfwSwapBuffers(window);
 		
